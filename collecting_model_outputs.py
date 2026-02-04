@@ -57,28 +57,23 @@ df["qwen_responses"] = completions
 completions = []
 
 for sample in text_samples:
-    completion = client.chat.completions.create(
-        extra_body={},
-        model="meta-llama/llama-3.1-8b-instruct",
-        messages=[
-        {
-            "role": "user",
-            "content": [
-            {
-                "type": "text",
-                "text": f""" You will be given a Turkish social media post.
-            Write a response post to it.
-            
-            Here is the text post to respond to:
-            {sample}
-            """
-            },
+  completion = client.chat.completions.create(
+    extra_body={},
+    model="meta-llama/llama-3.1-8b-instruct",
+    messages=[
+      {
+        "role": "user",
+        "content":f""" You will be given a Turkish social media post.
+          Write a response post to it. Do not include any text other than your response post.
+          
+          Here is the text post to respond to:
+          {sample}
+          """
+      }
+    ]
+  )
 
-            ]
-        }
-        ]
-    )
-    completions.append(completion.choices[0].message.content)
+  completions.append(completion.choices[0].message.content)
 
 df["llama_responses"] = completions
 
