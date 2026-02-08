@@ -1,6 +1,7 @@
 #Necessary imports
 import os
 import pandas as pd
+import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -78,5 +79,6 @@ for sample in text_samples:
 df["llama_responses"] = completions
 
 #Save CSV with model outputs
-df.to_csv("post_responses_qwen_llama.csv")
+name = f'data/outputs/post_responses_{datetime.datetime.now().strftime("%H:%M_%m/%d/%Y")}.csv'
+df.to_csv(name)
 
